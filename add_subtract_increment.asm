@@ -1,7 +1,7 @@
-.intel_syntax noprefix
-.global _start
-.text 
-_start
+global main
+
+section .text
+main:
 
 
 mov rax, 5
@@ -18,3 +18,5 @@ inc rax ; increments rax 3 times.
 dec rax
 dec rax
 dec rax ; decrements rax 3 times.
+
+ret
