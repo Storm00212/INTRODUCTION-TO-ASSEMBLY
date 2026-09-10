@@ -1,19 +1,14 @@
 global main
-extern exit
 
 section .text
 main:
-    ; 1. Setup Stack Alignment (Shadow Space)
-    ; Windows x64 ABI requires 32 bytes of shadow space plus 8 bytes 
-    ; to fix the alignment because the 'call' instruction pushed an 8-byte return address.
-    sub rsp, 40          
+    ; Perform your register math
+    mov eax, 2          ; Put 2 into EAX
+    mov ecx, 3          ; Put 3 into ECX
+    add eax, ecx        ; Add ECX to EAX (EAX now equals 5)
 
-    ; 2. Your Register Math
-    mov rax, 2          ; Put 2 into RAX
-    mov rcx, 3          ; Put 3 into RCX
-    add rax, rcx        ; Add RCX to RAX (RAX now equals 5)
+    ; In the C calling convention, the return value of a function 
+    ; MUST be placed in the EAX/RAX register right before returning.
+    ; Since EAX is already 5, Windows will receive 5 as the exit code.
 
-    ; 3. Clean up and Exit safely
-    mov ecx, eax        ; Move the lower 32-bits of RAX (our 5) into ECX for the exit status
-    add rsp, 40         ; Clean up the 40 bytes we allocated
-    call exit           ; Safe exit back to Windows
+    ret                 ; Return directly back to GCC's starter code
